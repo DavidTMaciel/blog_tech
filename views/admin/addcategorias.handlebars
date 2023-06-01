@@ -1,3 +1,14 @@
-<h2>Lista de categorias</h2>
-<hr>
-<button class="btb btn-sucess">Nova Categoria</button>
+<h3>Nova Categoria</h3>
+<div class="card">
+    <div class="card-body">
+        <form action="/admin/categorias/nova" method="POST">
+            <label for="nome">Nome:</label>
+            <input type="text" name="nome" id="nome" placeholder="Nome da categoria" class="form-control">
+            <label for="slug">Slug:</label>
+            <input type="text" name="slug" id="slug" placeholder="slug da categoria" class="form-control">
+            <br />
+            <button type="submit" class="btn btn-success">Criar categoria</button>
+        </form>
+    </div>
+
+</div>
