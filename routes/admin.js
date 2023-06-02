@@ -20,7 +20,7 @@ const Categoria = mongoose.model('Categorias');
             req.flash('error_msg', "Houve um erro ao registrar as categorias.");
             res.redirect("/admin");
         });
-        res.render("admin/categorias");
+        
     });
     router.get('/categorias/add', (req, res) => {
         res.render("admin/addcategorias");
