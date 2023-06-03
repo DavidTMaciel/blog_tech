@@ -16,18 +16,20 @@ const Categoria = mongoose.model('Categorias');
     router.get('/categorias', (req, res) => {
         Categoria.find().lean().then((categorias) => {
             res.render("admin/categorias", {categorias: categorias});
-        }).catch((erro) => {
+        }).catch((erro) => { //Tratamento do erro
             req.flash('error_msg', "Houve um erro ao registrar as categorias.");
             res.redirect("/admin");
         });
         
     });
+//Rota ADD categoria
     router.get('/categorias/add', (req, res) => {
         res.render("admin/addcategorias");
     });
     router.post('/categorias/nova', (req, res) => {
 
     let erros = [];
+    //Validação do envio do formulario, com os dados das categorias
 
     if (!req.body.nome || typeof req.body.nome == undefined || req.body.nome == null) {
         erros.push({ text: "Nome invalido" });
@@ -38,6 +40,8 @@ const Categoria = mongoose.model('Categorias');
     if(erros.length > 0) {
         res.render("admin/addcategorias", {erros: erros})
     }
+
+
     else{
         const novaCategoria = {
             nome: req.body.nome,
@@ -52,7 +56,9 @@ const Categoria = mongoose.model('Categorias');
             })
     }
     });
-
-
+    //Rota edição de categorias
+    router.get("/categorias/editar/:id", (req, res) => {
+        
+    })
 
 module.exports = router;
