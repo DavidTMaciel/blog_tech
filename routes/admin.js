@@ -56,7 +56,7 @@ const Categoria = mongoose.model('Categorias');
             })
     }
     });
-    //Rota edição de categorias
+//Rota edição de categorias
     router.get("/categorias/editar/:id", (req, res) => {
         //Pesquisando um registro que tenha um id = ao passado na rota
         Categoria.findOne({_id: req.params.id}).lean().then((categoria) => {
@@ -67,7 +67,7 @@ const Categoria = mongoose.model('Categorias');
         })
         
     });
-    //Aplicando a edição de categorias
+//Aplicando a edição de categorias
     router.post("/categorias/editar", (req, res) => {
         //Chamando o model, procurando um id que foi passado no form do front-end dentro do back-end 
         Categoria.findOne({_id: req.body.id}).then((categoria) => {
@@ -92,5 +92,22 @@ const Categoria = mongoose.model('Categorias');
             res.redirect("/admin/categorias");
         })
     })
+
+//Rota Deletar Categorias
+
+router.post("/categorias/deletar", (req, res) => {
+    Categoria.deleteOne({_id: req.body.id}).then(()=>{
+        req.flash("succes_msg", "Categoria deletada com sucesso")
+        res.redirect("/admin/categorias")
+    }).catch(()=>{
+        req.flash("error_msg", "Houve um erro ao deletar a categoria")
+        res.redirect("/admin/categorias")
+    })
+
+
+})
+
+
+
 
 module.exports = router;
