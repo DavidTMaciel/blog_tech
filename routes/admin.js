@@ -48,7 +48,7 @@ const Categoria = mongoose.model('Categorias');
             slug: req.body.slug
         }
             new Categoria(novaCategoria).save().then(() => {
-                req.flash("success_msg")
+                req.flash("success_msg", "Categoria criada com sucesso!");
                 res.redirect("/admin/categorias")
             }).catch((erro) => {
                 req.flash("error_msg", "Houve um erro ao salvar a categoria")
@@ -58,7 +58,39 @@ const Categoria = mongoose.model('Categorias');
     });
     //Rota edição de categorias
     router.get("/categorias/editar/:id", (req, res) => {
+        //Pesquisando um registro que tenha um id = ao passado na rota
+        Categoria.findOne({_id: req.params.id}).lean().then((categoria) => {
+            res.render("admin/editcategorias", {categoria: categoria});
+        }).catch((erro) => {
+            req.flash("error_msg", "Esta categoria não existe")
+            res.redirect("/admin/categorias")
+        })
         
+    });
+    //Aplicando a edição de categorias
+    router.post("/categorias/editar", (req, res) => {
+        //Chamando o model, procurando um id que foi passado no form do front-end dentro do back-end 
+        Categoria.findOne({_id: req.body.id}).then((categoria) => {
+            
+            categoria.nome = req.body.nome; //Pegando o campo nome e atribuindo
+            categoria.slug = req.body.slug;
+
+            //Validação da edição
+
+
+
+            categoria.save().then(() => {
+                req.flash("success_msg", "Categoria editada com sucesso")
+                res.redirect("/admin/categorias")
+            }).catch((erro)=> {
+                req.flash("error_msg", "Houve um erro interno ao salvar a edição categoria")
+                res.redirect("/admin/categorias")
+            })
+
+        }).catch((erro) => {
+            req.flash("error_msg", "Houve um erro ao editar a categoria")
+            res.redirect("/admin/categorias");
+        })
     })
 
 module.exports = router;
