@@ -107,6 +107,21 @@ router.post("/categorias/deletar", (req, res) => {
 
 })
 
+//Rota de postagens
+
+router.get("/postagens", (req, res) =>{
+    res.render("admin/postagens")
+})
+
+router.get("/postagens/add", (req, res) =>{
+    Categoria.find().lean().then((categorias) =>{
+        res.render("admin/addpostagens" , {categorias: categorias} )
+    }).catch((err) =>{
+        res.flash("error_msg", "Houve um erro ao salvar a postagen")
+        res.render("/admin/postagens")
+    });
+    
+})
 
 
 
