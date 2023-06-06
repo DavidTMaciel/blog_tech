@@ -163,6 +163,52 @@ router.get("/postagens/add", (req, res) =>{
 
     }
  })
+//Editando postagens
 
+router.get("/postagens/editar/:id", (req, res) => {
+    Postagens.findOne({_id: req.params.id}).lean().then((postagens) => {
+        res.render("admin/editpostagens", {postagens: postagens});
+    }).catch((erro) => {
+        req.flash("error_msg", "Ocorreu um erro editar postagens");
+        req.redirect("/admin/postagens");
+    });
+})
+
+//Aplicando a edição de categorias
+
+router.post("/postagens/editar", (req, res) => {
+//Chamando o model, procurando id que já foi passado no form
+
+    Postagens.findOne({_id: req.body.id}).then((postagens) => {
+
+        postagens.titulo = req.body.titulo;
+        postagens.slug = req.body.slug;
+        postagens.descricao = req.body.descricao;
+        postagens.conteudo = req.body.conteudo;
+        postagens.categoria = req.body.categoria;
+        
+         //Validação da edição
+
+
+
+
+        postagens.save().then(()=>{
+            req.flash("success_msg", "Postagem editada com sucesso")
+            res.redirect("/admin/postagens");
+        }).catch((erro)=>{
+            req.flash("error_msg", "Erro ao salvar postagem");
+            res.redirect("/admin/postagens");
+        })
+
+    
+    }).catch((erro)=>{
+        req.flash("error_msg", "Houve um erro ao editar a postagem");
+        res.redirect("/admin/postagens");
+    });
+   
+
+
+
+})
 
 module.exports = router;
