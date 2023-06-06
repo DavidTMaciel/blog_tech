@@ -1,0 +1,32 @@
+{{#each erros}}
+<div class="alet alert-danger">{{text}}</div>
+{{else}}
+{{/each}}
+<h3>Editar Postagem</h3>
+<div class="card">
+    <div class="card-body">
+        <form action="/admin/postagens/editar" method="POST">
+            <input type="hidden" name="id" value="{{postagens._id}}">
+            <label for="nome">Titulo:</label>
+            <input type="text" name="titulo" id="titulo" placeholder="Titulo" class="form-control" value="{{postagens.titulo}}">
+            <label for="slug">Slug:</label>
+            <input type="text" name="slug" id="slug" placeholder="slug " class="form-control"
+                value="{{postagens.slug}}">
+            <label>Descrição</label>
+            <input type="text" name="descricao" id="slug" placeholder="Descrição" class="form-control"
+                value="{{postagens.descricao}}">
+            <label for="conteudo">Conteudo: </label>
+            <textarea type="text" name="conteudo" id="conteudo" class="form-control">{{postagens.conteudo}}</textarea>
+            <label for="categoria">Categoria:</label>
+            <select class="custom-select" name="categoria">
+                {{#each categoria}}
+                <option value="{{_id}}">{{nome}}</option>
+                {{else}}
+                <p>Nenhuma categoria registrada</p>
+                {{/each}}
+            </select>
+            <br />
+            <button type="submit" class="btn btn-info">Editar Postagem</button>
+        </form>
+    </div>
+</div>
