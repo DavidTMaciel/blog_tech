@@ -65,7 +65,7 @@
         res.send("Error 404!")
     })
     //Rota de postagens Homepage
-    app.get("postagens/:slug", (req, res) => {
+    app.get("/postagens/:slug", (req, res) => {
         Postagem.findOne({slug: req.params.slug}).lean().then((postagens)=>{
             if(postagens){
                 res.render("postagem/index", {postagens: postagens});
