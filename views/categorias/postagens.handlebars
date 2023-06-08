@@ -1,0 +1,17 @@
+{{#each postagens}}
+<div class="card mt-4">
+  <div class="card-body">
+
+    <hr>
+    <h3>{{titulo}}</h3>
+    <p>{{descricao}}</p>
+    <a href="/postagens/{{slug}}"><button class="btn btn-info">Saiba mais</button></a>
+    <hr>
+    <br>
+    <small>Data de publicação: {{data}}</small>
+  </div>
+</div>
+{{else}}
+<h5>Nenhuma postagem</h5>
+
+{{/each}}
