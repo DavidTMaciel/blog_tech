@@ -3,6 +3,7 @@ const router = express.Router();
 const mongoose = require('mongoose');
 require("../models/Usuario")
 const Usuario = mongoose.model('Usuario');
+const bcrypt = require('bcryptjss');
 
 
 //Rota registro
@@ -34,22 +35,45 @@ router.post('/registro/novo', (req, res) => {
         res.render("usuarios/registro", {erros: erros})
     }
     else{
-        const novoUsuario = {
 
-            nome: req.body.nome,
-            email: req.body.email,
-            senha: req.body.senha
+        Usuario.findOne({email: req.body.email}).lean().then((usuario)=>{
+            if(usuario){
+                req.flash("error_msg", "Já existe uma conta com esse email");
+                res.redirect("/registro");
+            }else{
+                const novoUsuario =  new Usuario({
 
-        }
-        new Usuario(novoUsuario).save().then(() => {
-            req.flash("success_msg", "Usuario cadastrado com sucesso");
-            res.redirect("/admin")
+                    nome: req.body.nome,
+                    email: req.body.email,
+                    senha: req.body.senha
+        
+                })
+                //Criptografando a senha
+                bcrypt.genSalt(10, (erro, salt) =>{
+                    bcrypt.hash(novoUsuario.senha, salt, (erro, hash) =>{
+                        if(erro){
+                            req.flash('error_msg',"Houve um erro durante o salvamento do usuario")
+                            res.redirect('/');
+                        }else{
+                            novoUsuario.senha = hash;
+                            novoUsuario.save().then(()=>{
 
-        }).catch((erros) =>{
-            req.flash("error_msg", "Ocorreu um erro ao registar o usuario, por favor tente novamente");;
-            res.redirect("usuarios/registro")
-
+                                req.flash("success_msg", "Usuario cadastrado com sucesso");
+                                res.redirect("/admin")
+                    
+                            }).catch((erro) =>{
+                                req.flash("error_msg", "Ocorreu um erro ao registar o usuario, por favor tente novamente");;
+                                res.redirect("usuarios/registro")
+                        });
+                    }});
+                });
+            }
+        }).catch((error)=>{
+            req.flash("error_msg", "Houve um erro interno");
         });
+
+
+
         
     }
 });
