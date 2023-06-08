@@ -12,6 +12,7 @@
     const Postagem = mongoose.model('Postagens');
     require("./models/Categorias");
     const Categoria = mongoose.model('Categorias');
+    const usuarios = require("./routes/usuarios")
 
 //Configurações
     //Sessão
@@ -82,7 +83,7 @@
         })
     })
 
-    app.use('/admin', admin);
+    
     //Rota listagem categorias na pag inicial
     app.get("/categorias", (req, res)=>{
         Categoria.find().lean().then((categorias)=>{
@@ -110,6 +111,11 @@
             res.redirect('/');
         })
     });
+
+    app.use('/admin', admin);
+    app.use('/usuarios', usuarios);
+
+
 //Outros
 const PORT = 8081;
 app.listen(PORT, () => {
