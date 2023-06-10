@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 require("../models/Usuario")
 const Usuario = mongoose.model('Usuario');
 const bcrypt = require('bcryptjs');
+const passport = require("passport")
 
 
 //Rota registro
@@ -78,10 +79,19 @@ router.post('/registro/novo', (req, res) => {
     }
 });
 
-    //Login
+    //Rota Login
 
     router.get('/login', (req, res) =>{
         res.render('usuarios/login');
+    });
+    //Rota de autenticação
+    router.post('/login', (req, res, next) =>{
+
+        passport.authenticate("local", {
+            successRedirect:"/",
+            failureRedirect: "/usuarios/login",
+            failureFalsh:true
+        })(req, res, next)
     });
 
     
