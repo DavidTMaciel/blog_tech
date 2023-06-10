@@ -94,7 +94,15 @@ router.post('/registro/novo', (req, res) => {
         })(req, res, next)
     });
 
-    
+    //Rota Logout
+    router.get("/logout", (req, res)=>{
+        req.logout((err)=>{
+            if(err){return next(err);}
+            req.flash("success_msg", "Deslogado com sucesso!");
+            res.redirect("/");
+        });
+
+    })
 
 module.exports = router;
 
