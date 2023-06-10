@@ -3,7 +3,7 @@ const router = express.Router();
 const mongoose = require('mongoose');
 require("../models/Usuario")
 const Usuario = mongoose.model('Usuario');
-const bcrypt = require('bcryptjss');
+const bcrypt = require('bcryptjs');
 
 
 //Rota registro
@@ -32,14 +32,14 @@ router.post('/registro/novo', (req, res) => {
     }
     if(erros.length > 0){
         
-        res.render("usuarios/registro", {erros: erros})
+        res.render("/usuarios/registro", {erros: erros})
     }
     else{
 
         Usuario.findOne({email: req.body.email}).lean().then((usuario)=>{
             if(usuario){
                 req.flash("error_msg", "Já existe uma conta com esse email");
-                res.redirect("/registro");
+                res.redirect("/usuarios/registro");
             }else{
                 const novoUsuario =  new Usuario({
 
@@ -59,7 +59,7 @@ router.post('/registro/novo', (req, res) => {
                             novoUsuario.save().then(()=>{
 
                                 req.flash("success_msg", "Usuario cadastrado com sucesso");
-                                res.redirect("/admin")
+                                res.redirect("/")
                     
                             }).catch((erro) =>{
                                 req.flash("error_msg", "Ocorreu um erro ao registar o usuario, por favor tente novamente");;
