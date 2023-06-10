@@ -78,4 +78,10 @@ router.post('/registro/novo', (req, res) => {
     }
 });
 
+    //Login
+
+    router.get('/login', (req, res) =>{
+        res.render('usuarios/login');
+    });
+
 module.exports = router;
