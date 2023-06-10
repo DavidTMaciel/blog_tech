@@ -84,4 +84,7 @@ router.post('/registro/novo', (req, res) => {
         res.render('usuarios/login');
     });
 
+    
+
 module.exports = router;
+
