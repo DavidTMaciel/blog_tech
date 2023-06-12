@@ -13,6 +13,10 @@ const Categorias = new Schema({
     date:{
         type: Date,
         default: Date.now()
+    },
+    img:{
+        type: 'string',
+        required: true
     }
 });
 
