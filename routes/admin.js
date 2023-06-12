@@ -47,7 +47,8 @@ router.post('/categorias/nova',eAdmin, (req, res) => {
     else {
         const novaCategoria = {
             nome: req.body.nome,
-            slug: req.body.slug
+            slug: req.body.slug,
+            img: req.body.img
         }
         new Categoria(novaCategoria).save().then(() => {
             req.flash("success_msg", "Categoria criada com sucesso!");
@@ -76,6 +77,7 @@ router.post("/categorias/editar",eAdmin, (req, res) => {
 
         categoria.nome = req.body.nome; //Pegando o campo nome e atribuindo
         categoria.slug = req.body.slug;
+        categoria.img = req.body.img;
 
         //Validação da edição
 
