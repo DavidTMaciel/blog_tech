@@ -6,6 +6,7 @@ const Categoria = mongoose.model('Categorias');
 require("../models/Postagens");
 const Postagens = mongoose.model('Postagens');
 const {eAdmin }= require("../helpers/eAdmin");
+const {verificacao} = require("../helpers/verifica");
 //Rota principal
 router.get('/', (req, res) => {
     res.render("../views/admin/admin");
@@ -81,22 +82,31 @@ router.post("/categorias/editar",eAdmin, (req, res) => {
 
         //Validação da edição
 
+        let erros = [];
 
-
-        categoria.save().then(() => {
-            req.flash("success_msg", "Categoria editada com sucesso")
-            res.redirect("/admin/categorias")
-
-        }).catch((erro) => {
-            req.flash("error_msg", "Houve um erro interno ao salvar a edição categoria")
-            res.redirect("/admin/categorias")
-            console.log(erro)
-        })
-
+        if(!req.body.nome && typeof req.body.nome == undefined && req.body.slug == null){
+            erros.push({text: 'Nome invalido'})
+        }
+        if(req.body.slug && typeof req.body.slug == undefined && req.body.slug == null){
+            erros.push({text: 'Slug invalido'})
+        }
+        if(req.body.img && typeof req.body.img == undefined && req.body.img == null){
+            erros.push({text: 'Link invalido'})
+        }else{
+            categoria.save().then(() => {
+                req.flash("success_msg", "Categoria editada com sucesso");
+                res.redirect("/admin/categorias");
+    
+            }).catch((erro) => {
+                req.flash("error_msg", "Houve um erro interno ao salvar a edição categoria" + erros);
+                res.redirect("/admin/categorias");
+                console.log(erro);
+            })
+        }
     }).catch((erro) => {
         req.flash("error_msg", "Houve um erro ao editar a categoria")
         res.redirect("/admin/categorias");
-        console.log(erro)
+        console.log(erro);
     })
 })
 
@@ -200,9 +210,6 @@ router.post("/postagens/editar",eAdmin, (req, res) => {
 
         //Validação da edição
 
-
-
-
         postagens.save().then(() => {
             req.flash("success_msg", "Postagem editada com sucesso")
             res.redirect("/admin/postagens");
@@ -211,7 +218,6 @@ router.post("/postagens/editar",eAdmin, (req, res) => {
             req.flash("error_msg", "Erro ao salvar postagem");
             res.redirect("/admin/postagens");
         })
-
 
     }).catch((erro) => {
         console.log(erro);
