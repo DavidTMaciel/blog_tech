@@ -209,15 +209,37 @@ router.post("/postagens/editar",eAdmin, (req, res) => {
         postagens.categoria = req.body.categoria;
 
         //Validação da edição
+        function verificaConteudo(conteudo){
+            if(!conteudo && conteudo == null && conteudo == undefined){
+                return false
+            }
+            return true;
+        };
 
-        postagens.save().then(() => {
-            req.flash("success_msg", "Postagem editada com sucesso")
-            res.redirect("/admin/postagens");
-        }).catch((erro) => {
-            console.log(erro);
-            req.flash("error_msg", "Erro ao salvar postagem");
-            res.redirect("/admin/postagens");
-        })
+        if(verificaConteudo(postagens.titulo) == false){
+            erros.push({text: "Titulo invalido"});
+        }
+        if(verificaConteudo(postagens.slug) ==false){
+            erros.push({text: "Slug invalido"});
+        }
+        if(verificaConteudo(postagens.descricao) == false){
+            erros.push({text: "Descrição invalida"});
+        }
+        if(verificaConteudo(postagens.conteudo) == false){
+            erros.push({text: "Conteudo invalido"});
+        }
+        if(verificaConteudo(postagens.categoria) == false){
+            erros.push({text: "Categoria invalido"});
+        }else{
+            postagens.save().then(() => {
+                req.flash("success_msg", "Postagem editada com sucesso")
+                res.redirect("/admin/postagens");
+            }).catch((erro) => {
+                console.log(erro);
+                req.flash("error_msg", "Erro ao salvar postagem");
+                res.redirect("/admin/postagens");
+            })
+        }
 
     }).catch((erro) => {
         console.log(erro);
