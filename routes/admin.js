@@ -6,7 +6,6 @@ const Categoria = mongoose.model('Categorias');
 require("../models/Postagens");
 const Postagens = mongoose.model('Postagens');
 const {eAdmin }= require("../helpers/eAdmin");
-const {verificacao} = require("../helpers/verifica");
 //Rota principal
 router.get('/', (req, res) => {
     res.render("../views/admin/admin");
