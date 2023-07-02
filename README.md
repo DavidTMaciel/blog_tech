@@ -17,7 +17,19 @@ Projeto com Node.js e MongoDb, feito com framework express, com a prosposta de c
     <li>Handlebars</li>
     <li>Bootstrap</li>
 </ul>
+<h4>Executando o projeto</h4>
 
+```bash
+# clonar repositório
+git clone https://github.com/DavidTMaciel/blog_tech.git
+
+# entrar na pasta do projeto 
+cd App
+# instalar dependencias
+$ npm intall
+# executar o projeto
+$ start app.js
+```
 <h4>Assets</h4>
 <h5>Home</h5>
 
@@ -35,6 +47,10 @@ Projeto com Node.js e MongoDb, feito com framework express, com a prosposta de c
 <h5>Deploy</h5>
 
 
+# Autor
 
+David Tinoco Maciel Junior
+
+https://www.linkedin.com/in/david-maciel-36347518b/
 
 
