@@ -1,5 +1,5 @@
 # Blog
-Projeto com Node.js e MongoDb, feito com framework express, com a prosposta de criar um blog onde se tras noticias e novidades no mundo de T.I, onde é possivel criar postagens, editar, o usuario consegue visualizar a postagens, e categorias criadas, onde cada categoria tem sua gama de postagens publicadas com aquele tema, o usuario consegue fazer login, podendo ser usuario comum ou admin, onde tem os privilegios de manutenção de categorias e postagens.  
+O projeto é uma aplicação web desenvolvida com Node.js e MongoDB, utilizando o framework Express. Sua proposta é criar um blog que aborda notícias e novidades do mundo da Tecnologia da Informação (T.I).
 
 <h2>Tecnologias</h2> 
 
